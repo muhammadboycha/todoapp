@@ -47,7 +47,7 @@ export const Dashboard=()=>{
             <BannerSection  title="Make plan to get things done!" subTitle="You are almost there" details="All in one place to mange your task  efficiently." bgColor={LightColors.primary} color={LightColors.white}/>
             <div style={styles.taskWrapper}>
                 <p style={styles.task}>Tasks</p>
-                <p style={styles.viewAll}>View all 30 task</p>
+                <p style={styles.viewAll}>View all 30 task.</p>
             </div>
             <div style={styles.dashBoardWrapper}>
                 <DashBoardCard title="Todo" count="5" primaryColor={LightColors.primary} />
