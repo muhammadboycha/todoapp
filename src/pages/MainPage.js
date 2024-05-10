@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { DarkColors, LightColors } from "../constant/colors";
+import { LightColors } from "../constant/colors";
 export const MainPage=({children})=>{
     
     const styles={

@@ -31,9 +31,15 @@ export const BannerSection=({title,subTitle,details,bgColor,color})=>{
     }
     return (
        <div style={styles.mainContainer}>
-       <p style={styles.title}>{title}</p>
-       <p style={styles.subTitle}>{subTitle}</p>
-       <p style={styles.details}>{details}</p>
+        {title &&
+            <p style={styles.title}>{title}</p>
+        }
+        {subTitle &&
+            <p style={styles.subTitle}>{subTitle}</p>
+        }
+        {details &&
+            <p style={styles.details}>{details}</p>
+        }
         </div>
     )
 }

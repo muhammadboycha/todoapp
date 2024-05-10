@@ -44,7 +44,7 @@ export const Dashboard=()=>{
     return (
         <MainPage>
             <DashBoardHeader/>
-            <BannerSection  title="Make plan to get things done!" subTitle="You are almost there" details="All in one place to mange your task  efficiently." bgColor={LightColors.primary} color={LightColors.white}/>
+            <BannerSection  title="Make plan to get things done!"  details="All in one place to mange your task  efficiently." bgColor={LightColors.primary} color={LightColors.white}/>
             <div style={styles.taskWrapper}>
                 <p style={styles.task}>Tasks</p>
                 <p style={styles.viewAll}>View all 30 task.</p>
