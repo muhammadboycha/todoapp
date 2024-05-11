@@ -4,6 +4,7 @@ import { DashBoardHeader } from '../components/DashBoardHeader';
 import { BannerSection } from '../components/BannerSection';
 import { LightColors } from '../constant/colors';
 import { DashBoardCard } from '../components/DashCardItem';
+import { useNavigate } from "react-router-dom";
 
 export const Dashboard=()=>{
     const styles ={
@@ -40,7 +41,24 @@ export const Dashboard=()=>{
             marginBottom:'20px'
         }
 
+    };
+    const navigate=useNavigate();
+    const Handler=()=>{
+        navigate('/CreateTask')
     }
+   
+    // const navigate=useNavigate();
+    // const Handler=()=>{
+    //     navigate('/CreateTask')
+    // }
+    // const navigate=useNavigate();
+    // const Handler=()=>{
+    //     navigate('/CreateTask')
+    // }
+    // const navigate=useNavigate();
+    // const Handler=()=>{
+    //     navigate('/CreateTask')
+    // }
     return (
         <MainPage>
             <DashBoardHeader/>
@@ -50,14 +68,14 @@ export const Dashboard=()=>{
                 <p style={styles.viewAll}>View all 30 task.</p>
             </div>
             <div style={styles.dashBoardWrapper}>
-                <DashBoardCard title="Todo" count="5" primaryColor={LightColors.primary} />
-                <DashBoardCard title="In Progress" count="9" primaryColor={LightColors.warning} />
-                <DashBoardCard title="Completed" count="6" primaryColor={LightColors.success} />
-                <DashBoardCard title="OverDue" count="8" primaryColor={LightColors.danger} />
-                <DashBoardCard title="Delete" count="10" primaryColor={LightColors.secondaryBlack} />
+                <DashBoardCard  title="Todo" count="5" primaryColor={LightColors.primary} />
+                <DashBoardCard onClick={()=>{Handler()}} title="In Progress" count="9" primaryColor={LightColors.warning} />
+                <DashBoardCard onClick={()=>{Handler()}} title="Completed" count="6" primaryColor={LightColors.success} />
+                <DashBoardCard onClick={()=>{Handler()}} title="OverDue" count="8" primaryColor={LightColors.danger} />
+                <DashBoardCard onClick={()=>{Handler()}} title="Delete" count="10" primaryColor={LightColors.secondaryBlack} />
             </div>
             <div>
-                <button style={styles.createTask}>Create Task</button>
+                <button onClick={()=>{Handler()}} style={styles.createTask}>Create Task</button>
             </div>
         </MainPage>
     )

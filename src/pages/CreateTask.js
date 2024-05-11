@@ -3,6 +3,7 @@ import { NavBar } from "../components/NavBar";
 import { MainPage } from "./MainPage";
 import { BannerSection } from "../components/BannerSection";
 import { LightColors } from "../constant/colors";
+import { useNavigate } from "react-router-dom";
 export const CreateTask = () => {
   const styles = {
     main:{
@@ -35,7 +36,11 @@ export const CreateTask = () => {
       marginBottom: "40px",
     }
   };
-
+  const navigate=useNavigate();
+  const Handler=()=>{
+      navigate('/ViewTaskDetails')
+  }
+ 
   return (
     <MainPage>
       <NavBar />
@@ -51,7 +56,7 @@ export const CreateTask = () => {
         
           <input style={styles.inputField} type="text" placeholder="Please enter your task details" />
         
-        <button style={styles.createBtn}>Create</button>
+        <button onClick={()=>{Handler()}} style={styles.createBtn}>Create</button>
       </div>
     </MainPage>
   );

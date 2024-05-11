@@ -7,6 +7,7 @@ import { UpdateTask } from "../pages/UpdateTask";
 import { ViewTaskList } from "../pages/ViewTaskList";
 import { Dashboard } from "../pages/Dashboard";
 import { CreateTask } from "../pages/CreateTask";
+import { PageNotFound } from "../pages/PageNotFound";
 export const Routers = () => {
   return (
     <div>
@@ -15,10 +16,11 @@ export const Routers = () => {
           <Route path="/" element={<CreateAccount/>}/>
           <Route path="/Login" element={<Login/>}/> 
           <Route path="/ViewTaskDetails" element={<ViewTaskDetails/>}/> 
-          <Route path="/Login" element={<UpdateTask/>}/> 
+          <Route path="/updateTask" element={<UpdateTask/>}/> 
           <Route path="/ViewTaskList" element={<ViewTaskList/>}/> 
           <Route path="/Dashboard" element={<Dashboard/>}/>
-          <Route path="/CreateTask" element={<CreateTask/>}/> 
+          <Route path="/CreateTask" element={<CreateTask/>}/>
+          <Route path="*" element={<PageNotFound/>}/> 
         </Routes>
       </BrowserRouter>
     </div>
