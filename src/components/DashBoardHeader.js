@@ -31,7 +31,7 @@ export const DashBoardHeader=()=>{
     return(
         <div style={styles.header}>
             <div>
-                <p style={styles.name}>Hey, Boycha</p>
+                <p style={styles.name}>Hey, Muhammad Boycha</p>
                 <p style={styles.subText}>Let’s make this day productive</p>
             </div>
             <div>

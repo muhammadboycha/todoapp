@@ -52,19 +52,7 @@ export const Dashboard=()=>{
     const Handler=()=>{
         navigate('/CreateTask')
     }
-   
-    // const navigate=useNavigate();
-    // const Handler=()=>{
-    //     navigate('/CreateTask')
-    // }
-    // const navigate=useNavigate();
-    // const Handler=()=>{
-    //     navigate('/CreateTask')
-    // }
-    // const navigate=useNavigate();
-    // const Handler=()=>{
-    //     navigate('/CreateTask')
-    // }
+    
     return (
         <MainPage>
             <DashBoardHeader/>

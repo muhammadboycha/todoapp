@@ -24,7 +24,7 @@ export const MainPage=({children})=>{
     }
     return(
         <div style={styles.mainPage} >
-           <div style={styles.container}>
+           <div style={styles.container} className="MainPageContainer">
                     {children}
             </div>
         </div>
