@@ -9,16 +9,17 @@ export const MainPage=({children})=>{
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            paddingBottom:'100px',
-            paddingTop:'100px',
             
         },
         container:{
             borderRadius:'15px',
             width:'30%',
             minHeight:'50vh',
+            maxHeight:'90vh',
             boxShadow:'rgba(0, 0, 0, 1) 0px 0px 17px -9px',
-            padding:'15px'
+            padding:'15px',
+            overflowY:'auto',
+            position: 'relative',
         }
     }
     return(

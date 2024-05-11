@@ -26,7 +26,7 @@ export const BannerSection=({title,subTitle,details,bgColor,color})=>{
             fontSize:'16px',
             fontWeight: 'normal',
             marginBottom:'0px',
-            marginTop:'25px',
+            marginTop:'15px',
         }
     }
     return (

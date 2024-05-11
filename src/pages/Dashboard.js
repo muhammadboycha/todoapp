@@ -11,22 +11,28 @@ export const Dashboard=()=>{
         taskWrapper:{
             display:'flex',
             justifyContent:'space-between',
-            alignItems: 'center'
+            alignItems: 'center',
+            
         },
         task:{
             color:LightColors.secondaryBlack,
             fontSize:'25px',
             fontWeight:600,
+            marginBottom:'10px',
+            marginTop:'10px',
         },
         viewAll:{
             color:LightColors.primary,
             fontSize:'16px',
             fontWeight:600,
+            marginBottom:'10px',
+            marginTop:'10px',
         },
         dashBoardWrapper:{
             display:'flex',
             flexWrap:'wrap',
-            gap:'15px'
+            gap:'15px',
+            marginBottom:'10px',
         },
         createTask:{
             width: '100%',
@@ -34,11 +40,11 @@ export const Dashboard=()=>{
             padding: '10px',
             border: 'none',
             borderRadius: '15px',
-            marginTop: '35px',
+            marginTop: '5px',
             fontFamily:'Roboto',
             color: 'white',
             backgroundColor:LightColors.primary,
-            marginBottom:'20px'
+            
         }
 
     };

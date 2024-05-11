@@ -7,13 +7,14 @@ export const DashBoardHeader=()=>{
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            marginBottom: '20px',
+            marginBottom: '10px',
         },
         name:{
             fontSize: '27px',
             color:LightColors.primary,
             fontWeight:600,
-            marginBottom:'10px'
+            marginBottom:'10px',
+            marginTop: '0px',
         },
         subText:{
             marginTop:'0px',
