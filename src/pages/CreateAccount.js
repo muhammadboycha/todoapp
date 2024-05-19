@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Image } from '../components/Image';
 import { MainPage } from './MainPage';
 import Login from '../assets/images/signup.svg'
 import { BannerSection } from '../components/BannerSection';
 import { LightColors } from '../constant/colors';
 import { UserForm } from '../components/UserForm';
+import { isLogin } from '../helper';
+import { useNavigate } from 'react-router-dom';
 export const CreateAccount=()=>{
     const styles ={
         imageWrapper:{
@@ -15,6 +17,13 @@ export const CreateAccount=()=>{
             
         }
     }
+    const navigate=useNavigate();
+    useEffect(()=>{
+        if(isLogin()){
+            navigate("/dashboard");
+        }
+    },[navigate])
+
     return (
         <div className='maincontainer'>
             <MainPage>

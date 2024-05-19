@@ -4,8 +4,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons/faTrashCan";
 import { useNavigate } from "react-router-dom";
+import { formatDate } from "../helper";
 
-export const TaskListItem = ({ title, createDate, bgColors }) => {
+export const TaskListItem = ({ taskData, taskType, bgColors }) => {
   const styles = {
     mainContainer: {
       display: "flex",
@@ -43,19 +44,35 @@ export const TaskListItem = ({ title, createDate, bgColors }) => {
     },
   };
   const navigate=useNavigate();
+  
+  const {taskDetails:title,createdAt:createDate} = taskData;
   const handler=()=>{
-    navigate('/ViewTaskDetails')
+    console.log('task',taskType)
+    const data = {
+      color:bgColors,
+      data:taskData,
+      taskType
+   }
+    navigate('/ViewTaskDetails', { state: data })
+   
   }
+  const editTask = ()=>{
+    const data = {
+      taskData
+   }
+    navigate('/updateTask', { state: data })
+  }
+
   return (
     <div onClick={()=>{handler()}} style={styles.mainContainer}>
       <p style={styles.ptag}>{title}</p>
       <div style={styles.dateIcon}>
         <div>
-          <p style={styles.icons}>{createDate}</p>
+          <p style={styles.icons}>{formatDate(createDate)}</p>
         </div>
         <div>
           <p style={styles.icons}>
-            <FontAwesomeIcon style={styles.edit} icon={faPen} />
+            <FontAwesomeIcon style={styles.edit} icon={faPen} onClick={()=>editTask()} />
             <FontAwesomeIcon style={styles.delete} icon={faTrashCan} />
           </p>
         </div>

@@ -1,12 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { MainPage } from './MainPage';
 import { DashBoardHeader } from '../components/DashBoardHeader';
 import { BannerSection } from '../components/BannerSection';
 import { LightColors } from '../constant/colors';
 import { DashBoardCard } from '../components/DashCardItem';
 import { useNavigate } from "react-router-dom";
+import { isLogin } from '../helper';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 export const Dashboard=()=>{
+    const [allTask, setAllTask] = useState([]);
+    const[todo,setTodo] = useState([]);
+    const[completed,setCompleted] = useState([]);
+    const[deleted,setDeleted] = useState([]);
+    const[inprogress,setInprogress] = useState([]);
+    const[overdue,setOverdue] = useState([]);
     const styles ={
         taskWrapper:{
             display:'flex',
@@ -44,6 +53,7 @@ export const Dashboard=()=>{
             fontFamily:'Roboto',
             color: 'white',
             backgroundColor:LightColors.primary,
+            cursor: 'pointer',
             
         }
 
@@ -52,6 +62,60 @@ export const Dashboard=()=>{
     const Handler=()=>{
         navigate('/CreateTask')
     }
+    const apiCall = async()=>{
+        try{
+            const userData = JSON.parse(localStorage.getItem('user'));
+
+            let result = await axios.get("http://localhost:3001/getAllTask", {
+                headers: {
+                    token: userData.token
+                }
+                });
+            result = result.data
+            console.log(result)
+            if(result.data){
+                // console.log(result.data);
+              setAllTask(result.data);
+            } else {
+                toast.error(result.message, {
+                    position: "top-right"
+                  });
+            }
+            
+        } catch(e){
+           console.log("message error",e)
+
+            toast.error(e.message, {
+                position: "top-right"
+              });
+        }
+      
+    }
+    useEffect(()=>{
+       
+        if(!isLogin()){
+            navigate("/login");
+        }
+
+        apiCall();
+    },[navigate])
+
+    useEffect(()=>{
+            if(allTask.length > 0){
+                const todo = allTask.filter(item => item.taskStatus === "todo")
+                setTodo(todo);
+                const inprogress = allTask.filter(item => item.taskStatus === "inprogress")
+                setInprogress(inprogress);
+                const completed = allTask.filter(item => item.taskStatus === "completed")
+                setCompleted(completed);
+                const deleted = allTask.filter(item => item.taskStatus === "deleted")
+                setDeleted(deleted);
+
+                const date = new Date();
+                const overdue = allTask.filter(item => item.taskStatus === "inprogress" && new Date(item.endDate) < date);
+                setOverdue(overdue);
+            }
+    },[allTask]);
     
     return (
         <MainPage>
@@ -62,11 +126,11 @@ export const Dashboard=()=>{
                 <p style={styles.viewAll}>View all 30 task.</p>
             </div>
             <div style={styles.dashBoardWrapper}>
-                <DashBoardCard  title="Todo" count="5" primaryColor={LightColors.primary} />
-                <DashBoardCard  title="In Progress" count="9" primaryColor={LightColors.warning} />
-                <DashBoardCard  title="Completed" count="6" primaryColor={LightColors.success} />
-                <DashBoardCard  title="OverDue" count="8" primaryColor={LightColors.danger} />
-                <DashBoardCard  title="Delete" count="10" primaryColor={LightColors.secondaryBlack} />
+                <DashBoardCard  title="Todo" taskType="todo" count={todo ? todo.length : 0} primaryColor={LightColors.primary} />
+                <DashBoardCard  title="In Progress" taskType="inprogress" count={inprogress ? inprogress.length : 0} primaryColor={LightColors.warning} />
+                <DashBoardCard  title="Completed" taskType="completed" count={completed ? completed.length : 0} primaryColor={LightColors.success} />
+                <DashBoardCard  title="Overdue" taskType="overdue" count={overdue ? overdue.length : 0} primaryColor={LightColors.danger} />
+                <DashBoardCard  title="Deleted" taskType="deleted" count={deleted ? deleted.length : 0} primaryColor={LightColors.secondaryBlack} />
             </div>
             <div>
                 <button onClick={()=>{Handler()}} style={styles.createTask}>Create Task</button>

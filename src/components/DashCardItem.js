@@ -2,7 +2,7 @@ import React from "react";
 import { LightColors } from "../constant/colors";
 import { useNavigate } from "react-router-dom";
 
-export const DashBoardCard =({title,count,primaryColor})=>{
+export const DashBoardCard =({taskType,title,count,primaryColor})=>{
     const styles={
         mainContainer:{
             border:'none',
@@ -46,7 +46,13 @@ export const DashBoardCard =({title,count,primaryColor})=>{
     };
     const navigate=useNavigate();
     const handler=()=>{
-        navigate('/ViewTaskList')
+        const data = {
+            color:primaryColor,
+            type:taskType,
+            title
+         }
+          navigate('/ViewTaskList', { state: data })
+          
     }
     return(
        

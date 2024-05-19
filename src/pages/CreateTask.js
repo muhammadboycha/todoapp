@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavBar } from "../components/NavBar";
 import { MainPage } from "./MainPage";
 import { BannerSection } from "../components/BannerSection";
 import { LightColors } from "../constant/colors";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import axios from "axios";
 export const CreateTask = () => {
+  
   const styles = {
     main:{
         marginBottom: '230px',
@@ -37,9 +40,50 @@ export const CreateTask = () => {
       cursor: "pointer"
     }
   };
+  
+  const [taskDetails, setTaskDetails] = useState("");
   const navigate=useNavigate();
-  const Handler=()=>{
-      navigate('/ViewTaskDetails')
+
+  const apiCall = async()=>{
+    try{
+        const userData = JSON.parse(localStorage.getItem('user'));
+
+        let result = await axios.post("http://localhost:3001/createTask",{taskDetails}, {
+            headers: {
+                token: userData.token
+            }
+            });
+        result = result.data
+        console.log(result)
+        if(result.data){
+            // console.log(result.data);
+            const data = {
+              color:LightColors.primary,
+              type:'todo' }
+            navigate('/ViewTaskList', { state: data })
+        } else {
+            toast.error(result.message, {
+                position: "top-right"
+              });
+        }
+        
+    } catch(e){
+       console.log("message error",e)
+
+        toast.error(e.message, {
+            position: "top-right"
+          });
+    }
+  }
+  const create=()=>{
+      if(taskDetails){
+        apiCall();
+      } else {
+        toast.error("Please enter the task details.", {
+          position: "top-right"
+        });
+      }
+  
   }
  
   return (
@@ -55,9 +99,9 @@ export const CreateTask = () => {
       <div style={styles.main}>
         <h2 style={styles.heading}>Create Task</h2>
         
-          <input style={styles.inputField} type="text" placeholder="Please enter your task details" />
+          <input style={styles.inputField} onChange={(e)=>setTaskDetails(e.target.value)} type="text" placeholder="Please enter your task details" />
         
-        <button onClick={()=>{Handler()}} style={styles.createBtn}>Create</button>
+        <button onClick={()=>{create()}} style={styles.createBtn}>Create</button>
       </div>
     </MainPage>
   );
