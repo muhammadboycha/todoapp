@@ -45,12 +45,12 @@ export const DashBoardCard =({title,count,primaryColor})=>{
         }
     };
     const navigate=useNavigate();
-    const todo=()=>{
+    const handler=()=>{
         navigate('/ViewTaskList')
     }
     return(
        
-        <div onClick={()=>{todo()}} style={styles.mainContainer} >
+        <div onClick={()=>{handler()}} style={styles.mainContainer} >
             <div style={styles.header}>
                 {title}
             </div>

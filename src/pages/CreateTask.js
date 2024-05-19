@@ -34,6 +34,7 @@ export const CreateTask = () => {
       color: "white",
       backgroundColor: LightColors.primary,
       marginBottom: "40px",
+      cursor: "pointer"
     }
   };
   const navigate=useNavigate();

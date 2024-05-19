@@ -35,9 +35,12 @@ export const TaskDetails = ({ title, createDate, bgColors }) => {
     },
     edit: {
       color: LightColors.primary,
+      cursor: "pointer",
     },
     delete: {
       color: LightColors.danger,
+      boxShadow:'rgba(0, 0, 0, 1) 0px 0px 17px -9px',
+      cursor: "pointer",
     },
   };
   return (

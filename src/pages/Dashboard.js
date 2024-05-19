@@ -63,10 +63,10 @@ export const Dashboard=()=>{
             </div>
             <div style={styles.dashBoardWrapper}>
                 <DashBoardCard  title="Todo" count="5" primaryColor={LightColors.primary} />
-                <DashBoardCard onClick={()=>{Handler()}} title="In Progress" count="9" primaryColor={LightColors.warning} />
-                <DashBoardCard onClick={()=>{Handler()}} title="Completed" count="6" primaryColor={LightColors.success} />
-                <DashBoardCard onClick={()=>{Handler()}} title="OverDue" count="8" primaryColor={LightColors.danger} />
-                <DashBoardCard onClick={()=>{Handler()}} title="Delete" count="10" primaryColor={LightColors.secondaryBlack} />
+                <DashBoardCard  title="In Progress" count="9" primaryColor={LightColors.warning} />
+                <DashBoardCard  title="Completed" count="6" primaryColor={LightColors.success} />
+                <DashBoardCard  title="OverDue" count="8" primaryColor={LightColors.danger} />
+                <DashBoardCard  title="Delete" count="10" primaryColor={LightColors.secondaryBlack} />
             </div>
             <div>
                 <button onClick={()=>{Handler()}} style={styles.createTask}>Create Task</button>
