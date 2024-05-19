@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { DarkColors, LightColors } from "../constant/colors";
+import { LightColors } from "../constant/colors";
 export const MainPage=({children})=>{
     
     const styles={
@@ -10,21 +9,22 @@ export const MainPage=({children})=>{
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            paddingBottom:'100px',
-            paddingTop:'100px',
             
         },
         container:{
             borderRadius:'15px',
             width:'30%',
             minHeight:'50vh',
+            maxHeight:'90vh',
             boxShadow:'rgba(0, 0, 0, 1) 0px 0px 17px -9px',
-            padding:'15px'
+            padding:'15px',
+            overflowY:'auto',
+            position: 'relative',
         }
     }
     return(
         <div style={styles.mainPage} >
-           <div style={styles.container}>
+           <div style={styles.container} className="MainPageContainer">
                     {children}
             </div>
         </div>

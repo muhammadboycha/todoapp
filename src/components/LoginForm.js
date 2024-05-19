@@ -1,5 +1,6 @@
 import React from "react";
 import { LightColors } from "../constant/colors";
+import { useNavigate } from "react-router-dom";
 export const LoginForm=()=>{
     const styles={
         heading:{
@@ -33,6 +34,10 @@ export const LoginForm=()=>{
             marginBottom:'40px'
         },
     }
+    const navigate=useNavigate();
+    const Handler=()=>{
+        navigate('/Dashboard')
+    }
     return(
         <div>
             <h2 style={styles.heading}>Login</h2>
@@ -40,7 +45,7 @@ export const LoginForm=()=>{
             <input style={styles.inputField} type="text" placeholder="Username"/>
             <input style={styles.inputField}  type="text" placeholder="Mobile"/>
           </div>  
-          <button style={styles.createBtn}>Login</button>
+          <button onClick={()=>{Handler()}} style={styles.createBtn}>Login</button>
         </div>
     )
 }

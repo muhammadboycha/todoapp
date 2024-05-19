@@ -7,13 +7,14 @@ export const DashBoardHeader=()=>{
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            marginBottom: '20px',
+            marginBottom: '10px',
         },
         name:{
             fontSize: '27px',
             color:LightColors.primary,
             fontWeight:600,
-            marginBottom:'10px'
+            marginBottom:'10px',
+            marginTop: '0px',
         },
         subText:{
             marginTop:'0px',
@@ -30,7 +31,7 @@ export const DashBoardHeader=()=>{
     return(
         <div style={styles.header}>
             <div>
-                <p style={styles.name}>Hey, Boycha</p>
+                <p style={styles.name}>Hey, Muhammad Boycha</p>
                 <p style={styles.subText}>Let’s make this day productive</p>
             </div>
             <div>
