@@ -7,6 +7,7 @@ import { LightColors } from "../constant/colors";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { isLogin } from "../helper";
 export const UpdateTask = () => {
   
   const styles = {
@@ -96,6 +97,12 @@ export const UpdateTask = () => {
         setTaskDetails(urlData.taskData.taskDetails)
     }
 },[urlData]);
+
+useEffect(()=>{
+  if(!isLogin()){
+      navigate("/login");
+  }
+},[navigate])
  
   return (
     <MainPage>

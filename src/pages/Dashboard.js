@@ -5,7 +5,7 @@ import { BannerSection } from '../components/BannerSection';
 import { LightColors } from '../constant/colors';
 import { DashBoardCard } from '../components/DashCardItem';
 import { useNavigate } from "react-router-dom";
-import { isLogin } from '../helper';
+import { isLogin, logout } from '../helper';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
@@ -83,11 +83,17 @@ export const Dashboard=()=>{
             }
             
         } catch(e){
-           console.log("message error",e)
-
-            toast.error(e.message, {
+           console.log("message error",)
+           if(e.response.status === 401){
+                logout();
+                navigate("/login");
+           } else {
+            toast.error(e.response.data.message, {
                 position: "top-right"
               });
+           }
+
+           
         }
       
     }
@@ -95,24 +101,27 @@ export const Dashboard=()=>{
        
         if(!isLogin()){
             navigate("/login");
+        } else 
+        {
+            apiCall();
         }
 
-        apiCall();
+      
     },[navigate])
 
     useEffect(()=>{
             if(allTask.length > 0){
-                const todo = allTask.filter(item => item.taskStatus === "todo")
+                const todo = allTask.filter(item => item.taskStatus === "todo" && !item.isDeleted)
                 setTodo(todo);
-                const inprogress = allTask.filter(item => item.taskStatus === "inprogress")
+                const inprogress = allTask.filter(item => item.taskStatus === "inprogress" && !item.isDeleted)
                 setInprogress(inprogress);
-                const completed = allTask.filter(item => item.taskStatus === "completed")
+                const completed = allTask.filter(item => item.taskStatus === "completed" && !item.isDeleted)
                 setCompleted(completed);
-                const deleted = allTask.filter(item => item.taskStatus === "deleted")
+                const deleted = allTask.filter(item => item.isDeleted === true)
                 setDeleted(deleted);
 
                 const date = new Date();
-                const overdue = allTask.filter(item => item.taskStatus === "inprogress" && new Date(item.endDate) < date);
+                const overdue = allTask.filter(item => item.taskStatus === "inprogress" && !item.isDeleted && new Date(item.endDate) < date);
                 setOverdue(overdue);
             }
     },[allTask]);

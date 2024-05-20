@@ -1,8 +1,9 @@
 import React from 'react';
 import { LightColors } from '../constant/colors';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleArrowLeft, faFilter } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRightFromBracket, faCircleArrowLeft, faFilter, faPowerOff } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
+import { Logout } from './Logout';
 export const NavBar=()=>{
     const styles={
         main:{
@@ -35,7 +36,9 @@ export const NavBar=()=>{
             </div>
             <div  style={styles.iconBack}>
             <p onClick={()=>{navigate('/')}} style={styles.icon}>Home</p>
-            <p style={styles.icon}><FontAwesomeIcon icon={faFilter} /></p>
+            <p style={styles.icon}>
+                <Logout/> 
+            </p>
             </div>
             
         </div>

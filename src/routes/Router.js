@@ -8,6 +8,8 @@ import { ViewTaskList } from "../pages/ViewTaskList";
 import { Dashboard } from "../pages/Dashboard";
 import { CreateTask } from "../pages/CreateTask";
 import { PageNotFound } from "../pages/PageNotFound";
+import { StartTask } from "../pages/StartTask";
+import { ChangeTaskStatus } from "../pages/ChangeTaskStatus";
 export const Routers = () => {
   return (
     <div>
@@ -20,6 +22,8 @@ export const Routers = () => {
           <Route path="/ViewTaskList" element={<ViewTaskList/>}/> 
           <Route path="/Dashboard" element={<Dashboard/>}/>
           <Route path="/CreateTask" element={<CreateTask/>}/>
+          <Route path="/startTask" element={<StartTask/>}/>
+          <Route path="/ChangeTaskStatus" element={<ChangeTaskStatus/>}/>
           <Route path="*" element={<PageNotFound/>}/> 
         </Routes>
       </BrowserRouter>

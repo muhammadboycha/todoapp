@@ -4,9 +4,10 @@ import { NavBar } from '../components/NavBar';
 import { BannerSection } from '../components/BannerSection';
 import { LightColors } from '../constant/colors';
 import { TaskListItem } from '../components/TasklistItem';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { isLogin } from '../helper';
 
 export const ViewTaskList=()=>{
     const location = useLocation();
@@ -15,6 +16,7 @@ export const ViewTaskList=()=>{
     const [title,setTitle] = useState("");
     const [color, setColor] = useState("");
     const [taskList,setTaskList] = useState([]);
+    const navigate=useNavigate();
 
     const apiCall = async(type)=>{
         try{
@@ -31,10 +33,12 @@ export const ViewTaskList=()=>{
                 // console.log(result.data);
                 if(type === 'overdue'){
                     const date = new Date();
-                    setTaskList(result.data.filter(item => item.taskStatus === "inprogress" && new Date(item.endDate) < date));
+                    setTaskList(result.data.filter(item => item.taskStatus === "inprogress" && !item.isDeleted && new Date(item.endDate) < date));
 
+                } else if(type === "deleted" ){
+                    setTaskList(result.data.filter(item => item.isDeleted === true));
                 } else {
-                    setTaskList(result.data.filter(item => item.taskStatus === type));
+                    setTaskList(result.data.filter(item => item.taskStatus === type && !item.isDeleted));
                 }
                
             } else {
@@ -61,6 +65,13 @@ export const ViewTaskList=()=>{
             apiCall(urlData.type)
         }
     },[urlData]);
+    
+    useEffect(()=>{
+        if(!isLogin()){
+            navigate("/login");
+        }
+    },[navigate])
+
     return (
         <MainPage>
              <NavBar/>
@@ -69,7 +80,7 @@ export const ViewTaskList=()=>{
              }
             {taskList && taskList.map(item=>{
                 return <TaskListItem taskData={item} taskType={title}  bgColors={color}/>
-            })}
+            }).reverse()}
            
         </MainPage>
     )

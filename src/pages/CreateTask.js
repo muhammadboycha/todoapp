@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavBar } from "../components/NavBar";
 import { MainPage } from "./MainPage";
 import { BannerSection } from "../components/BannerSection";
@@ -6,6 +6,7 @@ import { LightColors } from "../constant/colors";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { isLogin } from "../helper";
 export const CreateTask = () => {
   
   const styles = {
@@ -85,6 +86,14 @@ export const CreateTask = () => {
       }
   
   }
+
+  useEffect(()=>{
+       
+    if(!isLogin()){
+        navigate("/login");
+    }
+  
+},[navigate])
  
   return (
     <MainPage>

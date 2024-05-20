@@ -4,13 +4,15 @@ import { NavBar } from '../components/NavBar';
 import { BannerSection } from '../components/BannerSection';
 import { LightColors } from '../constant/colors';
 import { TaskDetails } from '../components/TaskDetails';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { isLogin } from '../helper';
 export const ViewTaskDetails=()=>{
     const location = useLocation();
     const urlData = location.state;
     const [taskData,setTaskData] = useState({})
     const [color, setColor] = useState("");
     const [taskType, setTaskType] = useState("");
+    const navigate=useNavigate();
 
     useEffect(()=>{
         if(urlData){
@@ -22,6 +24,12 @@ export const ViewTaskDetails=()=>{
       
 
     },[urlData]);
+
+    useEffect(()=>{
+        if(!isLogin()){
+            navigate("/login");
+        }
+    },[navigate])
     return (
         <MainPage>
             <NavBar/>
