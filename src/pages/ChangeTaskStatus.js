@@ -21,49 +21,62 @@ export const ChangeTaskStatus=()=>{
 
     useEffect(()=>{
         if(urlData){
-            console.log("urlData",urlData);
             setTaskData(urlData.data);
             setColor(urlData.color);
             setTaskType(urlData.taskType);
+        } else {
+            navigate("/");
         }
       
 
     },[urlData]);
     const styles = {
-        createBtn: {
+        selectStatus: {
             width: "100%",
-            fontSize: "22px",
+            fontSize: "16px",
             padding: "10px",
-            border: "none",
+            border: `1px solid ${LightColors.gray}`,
             borderRadius: "15px",
-            marginTop: "35px",
+            marginTop: "25px",
             fontFamily: "Roboto",
-            color: "white",
-            backgroundColor: LightColors.primary,
+            color: LightColors.gray,
             marginBottom: "40px",
             cursor: "pointer"
-          }
+          },
+          createBtn:{
+            width: '100%',
+            fontSize: '22px',
+            padding: '10px',
+            border: 'none',
+            borderRadius: '15px',
+            marginTop: '35px',
+            fontFamily:'Roboto',
+            color: 'white',
+            backgroundColor:LightColors.primary,
+            cursor: 'pointer',
+            
+        }
+
     } 
 
     const apiCall = async()=>{
         try{
             const userData = JSON.parse(localStorage.getItem('user'));
     
-            let result = await axios.post("http://localhost:3001/statusUpdate",{id:taskData._id,status}, {
+            let result = await axios.post("http://localhost:3001/taskCompleted",{id:taskData._id}, {
                 headers: {
                     token: userData.token
                 }
                 });
             result = result.data
-            console.log(result)
             if(result.data){
-                // console.log(result.data);
                 toast.success(result.data.message, {
                     position: "top-right"
                   });
                 const data = {
-                  color:LightColors.primary,
-                  type:'inprogress' 
+                  color:LightColors.success,
+                  taskType:'completed',
+                  title:'Completed'
                 }
                 navigate('/ViewTaskList', { state: data })
             } else {
@@ -73,7 +86,6 @@ export const ChangeTaskStatus=()=>{
             }
             
         } catch(e){
-           console.log("message error",e)
     
             toast.error(e.message, {
                 position: "top-right"
@@ -81,9 +93,12 @@ export const ChangeTaskStatus=()=>{
         }
       }
     const updateStatus = ()=>{
-        console.log("task end date",status);
         if(status){
              apiCall();
+        } else{
+            toast.error("Please select the completed option.", {
+                position: "top-right"
+              });
         }
     }
     const options = ['completed'];
@@ -97,9 +112,9 @@ export const ChangeTaskStatus=()=>{
     return (
         <MainPage>
             <NavBar/>
-            <BannerSection title={taskType}  bgColor={color} color={LightColors.secondaryWhite}/>
-            <TaskDetails taskData={taskData} bgColors={color}/>
-            <select style={styles.createBtn} value={status} onChange={(e)=>setStatus(e.target.value)}>
+            <BannerSection title={taskType}  bgColor={LightColors.warning} color={LightColors.secondaryWhite}/>
+            <TaskDetails taskData={taskData} taskType={taskType} bgColors={LightColors.warning}/>
+            <select style={styles.selectStatus} value={status} onChange={(e)=>setStatus(e.target.value)}>
               <option value="" disabled>Select an option</option>
               {options.map((option, index) => (
                 <option key={index} value={option}>
@@ -107,7 +122,6 @@ export const ChangeTaskStatus=()=>{
                 </option>
               ))}
             </select>
-            {status && <p>You selected: {status}</p>}
             <button onClick={()=>{updateStatus()}} style={styles.createBtn}>Update status</button>
         </MainPage>
     )

@@ -48,6 +48,9 @@ export const UpdateTask = () => {
   const location = useLocation();
   const urlData = location.state;
   const [taskData,setTaskData] = useState({});
+  const [taskType,setTaskType] = useState("");
+  const [color,setColor] = useState("");
+  
 
   const apiCall = async()=>{
     try{
@@ -59,12 +62,28 @@ export const UpdateTask = () => {
             }
             });
         result = result.data
-        console.log(result)
         if(result.data){
-            // console.log(result.data);
-            const data = {
-              color:LightColors.primary,
-              type:'todo' }
+             let data;
+             if(taskType === "Todo"){
+               data = {
+                color:LightColors.primary,
+                title:"Todo",
+                taskType:"todo" 
+              }
+             } else if(taskType === "In Progress") {
+              data = {
+                color:LightColors.warning,
+                title:"In Progress",
+                 taskType:"inprogress" 
+              }
+            } else {
+              data = {
+                color:LightColors.danger,
+                title:"Overdue",
+                 taskType:"overdue" 
+              }
+            }
+          
             navigate('/ViewTaskList', { state: data })
         } else {
             toast.error(result.message, {
@@ -73,7 +92,6 @@ export const UpdateTask = () => {
         }
         
     } catch(e){
-       console.log("message error",e)
 
         toast.error(e.message, {
             position: "top-right"
@@ -82,7 +100,17 @@ export const UpdateTask = () => {
   }
   const update=()=>{
       if(taskDetails){
-        apiCall();
+        let error = "";
+        if (taskDetails.length < 3 ) {
+        error = 'Task details must be at least 3 characters long.';
+        toast.error(error,{
+            position: "top-right"
+          })
+        }
+
+        if(!error){
+            apiCall();
+        }
       } else {
         toast.error("Please enter the task details.", {
           position: "top-right"
@@ -95,7 +123,11 @@ export const UpdateTask = () => {
     if(urlData){
         setTaskData(urlData.taskData);
         setTaskDetails(urlData.taskData.taskDetails)
-    }
+        setTaskType(urlData.taskType);
+        setColor(urlData.bgColors);
+    } else {
+      navigate("/");
+  }
 },[urlData]);
 
 useEffect(()=>{
@@ -117,7 +149,7 @@ useEffect(()=>{
       <div style={styles.main}>
         <h2 style={styles.heading}>Update Task</h2>
         
-          <input style={styles.inputField} onChange={(e)=>setTaskDetails(e.target.value)} value={taskDetails} type="text" placeholder="Please enter your task details" />
+        <textarea minLength={3} maxLength={250}  style={styles.inputField} onChange={(e)=>setTaskDetails(e.target.value)} value={taskDetails} type="text" placeholder="Please enter your task details" >{taskDetails}</textarea>
         
         <button onClick={()=>{update()}} style={styles.createBtn}>Update</button>
       </div>

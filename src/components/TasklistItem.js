@@ -57,7 +57,6 @@ export const TaskListItem = ({ taskData, taskType, bgColors }) => {
   
   const {taskDetails:title,createdAt:createDate, endDate=""} = taskData;
   const handler=()=>{
-    console.log('task',taskType)
     const data = {
       color:bgColors,
       data:taskData,
@@ -72,16 +71,11 @@ export const TaskListItem = ({ taskData, taskType, bgColors }) => {
    }
     
   }
-  const editTask = ()=>{
-    const data = {
-      taskData
-   }
-    navigate('/updateTask', { state: data })
-  }
+ 
 
   return (
     <div onClick={()=>{handler()}} style={styles.mainContainer}>
-      <p style={styles.ptag}>{title}</p>
+      <p style={styles.ptag} className="ptag">{title}</p>
       <div style={styles.dateIcon}>
         <div>
           <p style={styles.icons}>{formatDate(createDate)}</p>

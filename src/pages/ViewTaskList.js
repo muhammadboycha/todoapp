@@ -28,9 +28,7 @@ export const ViewTaskList=()=>{
                 }
                 });
             result = result.data
-            console.log(result)
             if(result.data){
-                // console.log(result.data);
                 if(type === 'overdue'){
                     const date = new Date();
                     setTaskList(result.data.filter(item => item.taskStatus === "inprogress" && !item.isDeleted && new Date(item.endDate) < date));
@@ -48,7 +46,6 @@ export const ViewTaskList=()=>{
             }
             
         } catch(e){
-           console.log("message error",e)
 
             toast.error(e.message, {
                 position: "top-right"
@@ -60,9 +57,11 @@ export const ViewTaskList=()=>{
     useEffect(()=>{
         if(urlData){
             setTitle(urlData.title);
-            setTaskType(urlData.type);
+            setTaskType(urlData.taskType);
             setColor(urlData.color);
-            apiCall(urlData.type)
+            apiCall(urlData.taskType)
+        } else {
+            navigate("/");
         }
     },[urlData]);
     
@@ -72,15 +71,65 @@ export const ViewTaskList=()=>{
         }
     },[navigate])
 
+    const Handler=()=>{
+        navigate('/CreateTask')
+    }
+
+    const styles = {
+        wrapper:{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'column',
+            height: '50vh',
+            width: '100%',
+        },
+        title:{
+            color:LightColors.gray,
+            textAlign: 'center',
+        },
+        createTask:{
+            width: '150px',
+            fontSize: '16px',
+            padding: '10px',
+            border: 'none',
+            borderRadius: '15px',
+            marginTop: '5px',
+            fontFamily:'Roboto',
+            color: 'white',
+            backgroundColor:LightColors.primary,
+            cursor: 'pointer',
+            
+        },
+        mainNavigationWrapper:{
+            position: 'sticky',
+            top: '0',
+            backgroundColor: LightColors.white
+        },
+        secondaryNavigationWrapper:{
+            padding: '0px 7px'
+        }
+    }
+
     return (
         <MainPage>
+            <div style={styles.mainNavigationWrapper}>
              <NavBar/>
              {taskType && 
                 <BannerSection title={`${title} task list`} details={`You have ${taskList.length} task.`} bgColor={color} color={LightColors.secondaryWhite}/>
              }
+            </div>
+            <div style={styles.secondaryNavigationWrapper}>
             {taskList && taskList.map(item=>{
                 return <TaskListItem taskData={item} taskType={title}  bgColors={color}/>
             }).reverse()}
+
+            {taskList.length === 0 ? <div style={styles.wrapper}>
+                <p style={styles.title}>No task found! <br/>
+                Make plan to get things done!</p>
+                <button onClick={()=>{Handler()}} style={styles.createTask}>Create New Task</button>
+            </div>:""}
+            </div>
            
         </MainPage>
     )

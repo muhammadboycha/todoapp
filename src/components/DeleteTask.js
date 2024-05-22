@@ -7,7 +7,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-export const DeleteTask = ({taskData})=>{
+export const DeleteTask = ({taskData, taskType, bgColors })=>{
         const [showModal, setShowModal] = useState(false);
         const navigate=useNavigate();
         const apiCall = async()=>{
@@ -20,18 +20,39 @@ export const DeleteTask = ({taskData})=>{
                     }
                     });
                 result = result.data
-                console.log(result)
                 if(result.data){
-                    // console.log(result.data);
                     setShowModal(false);
                     toast.success(result.data.message, {
                         position: "top-right"
                       });
-                    const data = {
-                      color:LightColors.secondaryBlack,
-                      type:'deleted' 
-                    }
-                    navigate('/ViewTaskList', { state: data })
+                      let data;
+                      if(taskType === "Todo"){
+                        data = {
+                         color:LightColors.primary,
+                         title:"Todo",
+                         taskType:"todo" 
+                       }
+                      } else if(taskType === "In Progress") {
+                       data = {
+                         color:LightColors.warning,
+                         title:"In Progress",
+                          taskType:"inprogress" 
+                       }
+                     } else if(taskType === "Completed"){
+                      data = {
+                        color:LightColors.success,
+                        title:"Completed",
+                         taskType:"completed" 
+                      }
+                     } else {
+                      data = {
+                        color:LightColors.danger,
+                        title:"Overdue",
+                         taskType:"overdue" 
+                      }
+                     }
+                   
+                     navigate('/ViewTaskList', { state: data })
                 } else {
                     toast.error(result.message, {
                         position: "top-right"
@@ -39,7 +60,6 @@ export const DeleteTask = ({taskData})=>{
                 }
                 
             } catch(e){
-               console.log("message error",e)
         
                 toast.error(e.message, {
                     position: "top-right"
@@ -48,16 +68,12 @@ export const DeleteTask = ({taskData})=>{
           }
 
         const handleYes = () => {
-          console.log('User clicked Yes',taskData._id);
-        
-          // Add your Yes handling logic here
           if(taskData._id){
             apiCall()
           }
         };
       
         const handleNo = () => {
-          console.log('User clicked No');
           setShowModal(false);
           // Add your No handling logic here
         };

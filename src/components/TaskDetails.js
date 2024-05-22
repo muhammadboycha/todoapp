@@ -7,9 +7,9 @@ import { useNavigate } from "react-router-dom";
 import { YesNoModal } from "./YesNoModel";
 import { DeleteTask } from "./DeleteTask";
 
-export const TaskDetails = ({ taskData, bgColors }) => {
+export const TaskDetails = ({ taskData,taskType, bgColors }) => {
   const navigate=useNavigate();
-  const {taskDetails:title, createdAt: createDate, endDate , isDeleted} = taskData;
+  const {taskDetails:title, createdAt: createDate, endDate , isDeleted, taskStatus, taskCompletedDate} = taskData;
   const styles = {
     mainContainer: {
       display: "flex",
@@ -24,6 +24,7 @@ export const TaskDetails = ({ taskData, bgColors }) => {
       display: "flex",
       justifyContent: "space-between",
       padding: "10px 0px 0px",
+      alignItems: "end",
     },
     icons: {
       display: "flex",
@@ -31,6 +32,14 @@ export const TaskDetails = ({ taskData, bgColors }) => {
       margin: "0px",
       fontSize: "14px",
       color: LightColors.gray,
+    },
+    completed:{
+      display: "flex",
+      gap: "10px",
+      margin: "0px",
+      fontSize: "14px",
+      color: LightColors.success,
+      marginBottom: "5px"
     },
     ptag: {
       margin: "0px",
@@ -52,7 +61,9 @@ export const TaskDetails = ({ taskData, bgColors }) => {
   };
   const editTask = ()=>{
     const data = {
-      taskData
+      taskData,
+      taskType,
+      bgColors
    }
     navigate('/updateTask', { state: data })
   }
@@ -62,6 +73,9 @@ export const TaskDetails = ({ taskData, bgColors }) => {
       <p style={styles.ptag}>{title}</p>
       <div style={styles.dateIcon}>
         <div>
+          {taskCompletedDate &&
+          <p style={styles.completed}>{formatDate(taskCompletedDate)}</p>
+          }
           <p style={styles.icons}>{formatDate(createDate)}</p>
         </div>
         {endDate && 
@@ -71,8 +85,10 @@ export const TaskDetails = ({ taskData, bgColors }) => {
         }
         {isDeleted ? "": <div>
             <p style={styles.icons}>
+              {taskStatus !== 'completed' && 
               <FontAwesomeIcon style={styles.edit} icon={faPen} onClick={()=>editTask()}/>
-              <DeleteTask taskData={taskData}/>
+              }
+              <DeleteTask taskData={taskData} taskType={taskType} bgColors={bgColors}  />
             </p>
           </div>}
        

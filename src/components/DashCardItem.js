@@ -48,7 +48,7 @@ export const DashBoardCard =({taskType,title,count,primaryColor})=>{
     const handler=()=>{
         const data = {
             color:primaryColor,
-            type:taskType,
+            taskType,
             title
          }
           navigate('/ViewTaskList', { state: data })

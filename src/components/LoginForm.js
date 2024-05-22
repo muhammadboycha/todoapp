@@ -33,7 +33,8 @@ export const LoginForm=()=>{
             fontFamily:'Roboto',
             color: 'white',
             backgroundColor:LightColors.primary,
-            marginBottom:'40px'
+            marginBottom:'40px',
+            cursor: 'pointer'
         }, 
         loginWrapper: {
             display: 'flex',
@@ -57,7 +58,6 @@ export const LoginForm=()=>{
         try{
             let result = await axios.post("http://localhost:3001/login",{name,mobile})
             result = result.data
-            console.log(result)
             if(result.data){
                 setUserName("");
               setMobile("");
@@ -70,8 +70,6 @@ export const LoginForm=()=>{
             }
             
         } catch(e){
-           console.log("message error",e)
-
             toast.error(e.message, {
                 position: "top-right"
               });
@@ -80,7 +78,27 @@ export const LoginForm=()=>{
     }
     const Login=()=>{
         if(name && mobile) {
-            apiCall()
+             // Validate name: should be a non-empty string
+             let error = "";
+             const nameRegex = /^[A-Za-z]+$/;
+             if (!nameRegex.test(name) || name.length < 3) {
+             error = 'Name must be alphabet and min. 3 characters long';
+             toast.error(error,{
+                 position: "top-right"
+               })
+             }
+ 
+             // Validate mobile: should be exactly 10 digits
+             const mobileRegex = /^\d{10}$/;
+             if (!mobileRegex.test(mobile)) {
+             error = 'Mobile number must be exactly 10 digits';
+             toast.error(error,{
+                 position: "top-right"
+               })
+             }
+             if(!error){
+                 apiCall();
+             }
         } else {
             toast.error("Please enter name and mobile!",{
                 position: "top-right"
@@ -92,8 +110,8 @@ export const LoginForm=()=>{
         <div>
             <h2 style={styles.heading}>Login</h2>
           <div style={styles.inputDiv}>
-            <input style={styles.inputField} onChange={(e)=>{setUserName(e.target.value)}} type="text" placeholder="Username"/>
-            <input style={styles.inputField} onChange={(e)=>{setMobile(e.target.value)}}  type="text" placeholder="Mobile"/>
+            <input style={styles.inputField} minLength={3} maxLength={50} onChange={(e)=>{setUserName(e.target.value)}} type="text" placeholder="Username"/>
+            <input style={styles.inputField} minLength={10} maxLength={10} onChange={(e)=>{setMobile(e.target.value)}}  type="text" placeholder="Mobile"/>
           </div>  
           <div style={styles.loginWrapper}>
           <p style={styles.alreadyHaveAccount}>If you don't have account?</p>

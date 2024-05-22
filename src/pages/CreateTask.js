@@ -11,7 +11,7 @@ export const CreateTask = () => {
   
   const styles = {
     main:{
-        marginBottom: '230px',
+        
     },
     heading: {
       color: LightColors.secondaryBlack,
@@ -55,12 +55,12 @@ export const CreateTask = () => {
             }
             });
         result = result.data
-        console.log(result)
         if(result.data){
-            // console.log(result.data);
             const data = {
               color:LightColors.primary,
-              type:'todo' }
+              title:"Todo",
+              taskType:"todo" 
+            }
             navigate('/ViewTaskList', { state: data })
         } else {
             toast.error(result.message, {
@@ -69,7 +69,6 @@ export const CreateTask = () => {
         }
         
     } catch(e){
-       console.log("message error",e)
 
         toast.error(e.message, {
             position: "top-right"
@@ -78,7 +77,18 @@ export const CreateTask = () => {
   }
   const create=()=>{
       if(taskDetails){
-        apiCall();
+         // Validate name: should be a non-empty string
+         let error = "";
+         if (taskDetails.length < 3 ) {
+         error = 'Task details must be at least 3 characters long.';
+         toast.error(error,{
+             position: "top-right"
+           })
+         }
+
+         if(!error){
+             apiCall();
+         }
       } else {
         toast.error("Please enter the task details.", {
           position: "top-right"
@@ -108,7 +118,7 @@ export const CreateTask = () => {
       <div style={styles.main}>
         <h2 style={styles.heading}>Create Task</h2>
         
-          <input style={styles.inputField} onChange={(e)=>setTaskDetails(e.target.value)} type="text" placeholder="Please enter your task details" />
+          <textarea minLength={3} maxLength={250} style={styles.inputField} onChange={(e)=>setTaskDetails(e.target.value)} type="text" placeholder="Please enter your task details" ></textarea>
         
         <button onClick={()=>{create()}} style={styles.createBtn}>Create</button>
       </div>

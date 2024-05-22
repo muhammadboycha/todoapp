@@ -8,7 +8,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { faPowerOff } from "@fortawesome/free-solid-svg-icons";
 
-export const Logout = ()=>{
+export const Logout = ({children})=>{
         const [showModal, setShowModal] = useState(false);
         const navigate=useNavigate();
        
@@ -18,7 +18,6 @@ export const Logout = ()=>{
         };
       
         const handleNo = () => {
-          console.log('User clicked No');
           setShowModal(false);
         };
       
@@ -32,11 +31,21 @@ export const Logout = ()=>{
                 boxShadow:'rgba(0, 0, 0, 1) 0px 0px 17px -9px',
                 cursor: "pointer",
               },
+              wrapper:{
+                display: "flex",
+                alignItems: "center",
+                justifycontent: "center",
+                gap: "10px",
+                cursor: "pointer",
+                padding: "10px 15px",
+
+              }
         }
       
 
-    return <>
+    return <span style={styles.wrapper} onClick={()=>showYesNoModal()} >
         {showModal && <YesNoModal onYes={handleYes} onNo={handleNo} text="Are you sure you want to logout?"/>}
-    <FontAwesomeIcon style={styles.delete} onClick={()=>showYesNoModal()} icon={faPowerOff} />
-    </>
+    {children ? children:""}
+    <FontAwesomeIcon style={styles.delete} icon={faPowerOff} />
+    </span>
 }

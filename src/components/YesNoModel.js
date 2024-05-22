@@ -28,8 +28,8 @@ export const YesNoModal = ({ onYes, onNo, text }) => {
                 fontFamily:'Roboto',
                 color: 'white',
                 backgroundColor:LightColors.primary,
-                marginBottom:'5px'
-        
+                marginBottom:'5px',
+                cursor: 'pointer'
         },
         no:{
             width: '50%',
@@ -40,7 +40,8 @@ export const YesNoModal = ({ onYes, onNo, text }) => {
             fontFamily:'Roboto',
             color: LightColors.primary,
             border: `1px solid ${LightColors.primary}`,
-            marginBottom:'5px'
+            marginBottom:'5px',
+            cursor: 'pointer'
         }
 
     }

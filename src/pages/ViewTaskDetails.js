@@ -16,10 +16,11 @@ export const ViewTaskDetails=()=>{
 
     useEffect(()=>{
         if(urlData){
-            console.log("urlData",urlData);
             setTaskData(urlData.data);
             setColor(urlData.color);
             setTaskType(urlData.taskType);
+        } else {
+            navigate("/");
         }
       
 
@@ -34,7 +35,7 @@ export const ViewTaskDetails=()=>{
         <MainPage>
             <NavBar/>
             <BannerSection title={taskType}  bgColor={color} color={LightColors.secondaryWhite}/>
-            <TaskDetails taskData={taskData} bgColors={color}/>
+            <TaskDetails taskData={taskData} taskType={taskType} bgColors={color}/>
         </MainPage>
     )
 }

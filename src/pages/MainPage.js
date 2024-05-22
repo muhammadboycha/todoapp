@@ -20,6 +20,8 @@ export const MainPage=({children})=>{
             padding:'15px',
             overflowY:'auto',
             position: 'relative',
+            paddingTop:'0px',
+            marginTop:'15px',
         }
     }
     return(

@@ -34,7 +34,8 @@ export const UserForm=()=>{
             fontFamily:'Roboto',
             color: 'white',
             backgroundColor:LightColors.primary,
-            marginBottom:'5px'
+            marginBottom:'5px',
+            cursor: 'pointer'
         },
         loginWrapper: {
             display: 'flex',
@@ -70,7 +71,6 @@ export const UserForm=()=>{
     const apiCall = async()=>{
         try{
             const result = await axios.post("http://localhost:3001/createUser",{name,mobile})
-            console.log(result);
             setApiResponse(result)
             toast.success(result.data.message, {
                 position: "top-right"
@@ -80,17 +80,43 @@ export const UserForm=()=>{
               setIsSuccess(true);
            
         } catch(e){
-           
-            toast.error(e.message, {
+           if(e.response.status === 400){
+            toast.error(e.response.data.message, {
                 position: "top-right"
               });
+           } else {
+            toast.error(e.response.data.message, {
+                position: "top-right"
+              });
+           }
+           
         }
       
     }
     const createAccount=()=>{
         // navigate('/Login')
         if(name && mobile) {
-            apiCall()
+            // Validate name: should be a non-empty string
+            let error = "";
+            const nameRegex = /^[A-Za-z]+$/;
+            if (!nameRegex.test(name) || name.length < 3) {
+            error = 'Name must be alphabet and min. 3 characters long';
+            toast.error(error,{
+                position: "top-right"
+              })
+            }
+
+            // Validate mobile: should be exactly 10 digits
+            const mobileRegex = /^\d{10}$/;
+            if (!mobileRegex.test(mobile)) {
+            error = 'Mobile number must be exactly 10 digits';
+            toast.error(error,{
+                position: "top-right"
+              })
+            }
+            if(!error){
+                apiCall();
+            }
         } else {
             toast.error("Please enter name and mobile!",{
                 position: "top-right"

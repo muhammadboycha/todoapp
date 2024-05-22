@@ -72,9 +72,7 @@ export const Dashboard=()=>{
                 }
                 });
             result = result.data
-            console.log(result)
             if(result.data){
-                // console.log(result.data);
               setAllTask(result.data);
             } else {
                 toast.error(result.message, {
@@ -83,7 +81,6 @@ export const Dashboard=()=>{
             }
             
         } catch(e){
-           console.log("message error",)
            if(e.response.status === 401){
                 logout();
                 navigate("/login");
@@ -132,7 +129,7 @@ export const Dashboard=()=>{
             <BannerSection  title="Make plan to get things done!"  details="All in one place to mange your task  efficiently." bgColor={LightColors.primary} color={LightColors.white}/>
             <div style={styles.taskWrapper}>
                 <p style={styles.task}>Tasks</p>
-                <p style={styles.viewAll}>View all 30 task.</p>
+                <p style={styles.viewAll}>Total {allTask.length} task.</p>
             </div>
             <div style={styles.dashBoardWrapper}>
                 <DashBoardCard  title="Todo" taskType="todo" count={todo ? todo.length : 0} primaryColor={LightColors.primary} />

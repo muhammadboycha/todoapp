@@ -21,10 +21,11 @@ export const StartTask=()=>{
 
     useEffect(()=>{
         if(urlData){
-            console.log("urlData",urlData);
             setTaskData(urlData.data);
             setColor(urlData.color);
             setTaskType(urlData.taskType);
+        } else {
+            navigate("/");
         }
       
 
@@ -55,15 +56,14 @@ export const StartTask=()=>{
                 }
                 });
             result = result.data
-            console.log(result)
             if(result.data){
-                // console.log(result.data);
                 toast.success(result.data.message, {
                     position: "top-right"
                   });
                 const data = {
-                  color:LightColors.primary,
-                  type:'inprogress' 
+                  color:LightColors.warning,
+                  taskType:'inprogress',
+                  title: 'In Progress'
                 }
                 navigate('/ViewTaskList', { state: data })
             } else {
@@ -73,15 +73,12 @@ export const StartTask=()=>{
             }
             
         } catch(e){
-           console.log("message error",e)
-    
             toast.error(e.message, {
                 position: "top-right"
               });
         }
       }
     const startTask = ()=>{
-        console.log("task end date",taskEndDate);
         if(taskEndDate){
              apiCall();
         }
@@ -97,7 +94,7 @@ export const StartTask=()=>{
         <MainPage>
             <NavBar/>
             <BannerSection title={taskType}  bgColor={color} color={LightColors.secondaryWhite}/>
-            <TaskDetails taskData={taskData} bgColors={color}/>
+            <TaskDetails taskData={taskData} taskType={taskType} bgColors={color}/>
             <ReactDatePicker 
             selected={taskEndDate} 
             onChange={(date) => setTaskEndDate(date)} 
