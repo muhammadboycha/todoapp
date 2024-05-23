@@ -1,13 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavBar } from "../components/NavBar";
 import { MainPage } from "./MainPage";
 import { BannerSection } from "../components/BannerSection";
 import { LightColors } from "../constant/colors";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import axios from "axios";
+import { isLogin } from "../helper";
+import { envConstant } from "../envConstant";
 export const CreateTask = () => {
+  
   const styles = {
     main:{
-        marginBottom: '230px',
+        
     },
     heading: {
       color: LightColors.secondaryBlack,
@@ -37,10 +42,69 @@ export const CreateTask = () => {
       cursor: "pointer"
     }
   };
+  
+  const [taskDetails, setTaskDetails] = useState("");
   const navigate=useNavigate();
-  const Handler=()=>{
-      navigate('/ViewTaskDetails')
+
+  const apiCall = async()=>{
+    try{
+        const userData = JSON.parse(localStorage.getItem('user'));
+
+        let result = await axios.post(`${envConstant.apiUrl}/createTask`,{taskDetails}, {
+            headers: {
+                token: userData.token
+            }
+            });
+        result = result.data
+        if(result.data){
+            const data = {
+              color:LightColors.primary,
+              title:"Todo",
+              taskType:"todo" 
+            }
+            navigate('/ViewTaskList', { state: data })
+        } else {
+            toast.error(result.message, {
+                position: "top-right"
+              });
+        }
+        
+    } catch(e){
+
+        toast.error(e.message, {
+            position: "top-right"
+          });
+    }
   }
+  const create=()=>{
+      if(taskDetails){
+         // Validate name: should be a non-empty string
+         let error = "";
+         if (taskDetails.length < 3 ) {
+         error = 'Task details must be at least 3 characters long.';
+         toast.error(error,{
+             position: "top-right"
+           })
+         }
+
+         if(!error){
+             apiCall();
+         }
+      } else {
+        toast.error("Please enter the task details.", {
+          position: "top-right"
+        });
+      }
+  
+  }
+
+  useEffect(()=>{
+       
+    if(!isLogin()){
+        navigate("/login");
+    }
+  
+},[navigate])
  
   return (
     <MainPage>
@@ -55,9 +119,9 @@ export const CreateTask = () => {
       <div style={styles.main}>
         <h2 style={styles.heading}>Create Task</h2>
         
-          <input style={styles.inputField} type="text" placeholder="Please enter your task details" />
+          <textarea minLength={3} maxLength={250} style={styles.inputField} onChange={(e)=>setTaskDetails(e.target.value)} type="text" placeholder="Please enter your task details" ></textarea>
         
-        <button onClick={()=>{Handler()}} style={styles.createBtn}>Create</button>
+        <button onClick={()=>{create()}} style={styles.createBtn}>Create</button>
       </div>
     </MainPage>
   );

@@ -14,12 +14,14 @@ export const MainPage=({children})=>{
         container:{
             borderRadius:'15px',
             width:'30%',
-            minHeight:'50vh',
+            minHeight:'90vh',
             maxHeight:'90vh',
             boxShadow:'rgba(0, 0, 0, 1) 0px 0px 17px -9px',
             padding:'15px',
             overflowY:'auto',
             position: 'relative',
+            paddingTop:'0px',
+            marginTop:'15px',
         }
     }
     return(
