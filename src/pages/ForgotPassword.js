@@ -7,7 +7,8 @@ import { LightColors } from '../constant/colors';
 import { UserForm } from '../components/UserForm';
 import { isLogin } from '../helper';
 import { useNavigate } from 'react-router-dom';
-export const CreateAccount=()=>{
+import { ForgotPasswordForm } from '../components/ForgotPasswordForm';
+export const ForgotPassword=()=>{
     const styles ={
         imageWrapper:{
             display: 'flex',
@@ -28,10 +29,10 @@ export const CreateAccount=()=>{
         <div className='maincontainer'>
             <MainPage>
                 <div style={styles.imageWrapper}>
-                <Image  src={Login} height="160px" width="160px"/>
+                <Image  src={Login} height="200px" width="200px"/>
                 </div>
                 <BannerSection title="Make plan to get things done!" subTitle="You are almost there" details="All in one place to mange your task  efficiently." bgColor={LightColors.primary} color={LightColors.white}/>
-                <UserForm/>
+                <ForgotPasswordForm/>
             </MainPage>
             
 

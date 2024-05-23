@@ -16,6 +16,7 @@ export const NavBar=()=>{
             gap:'10px',
             fontSize:'24px',
             cursor:'pointer',
+            alignItems: 'center',
         },
         icon:{
             fontSize:'24px',

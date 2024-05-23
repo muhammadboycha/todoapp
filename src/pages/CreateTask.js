@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { isLogin } from "../helper";
+import { envConstant } from "../envConstant";
 export const CreateTask = () => {
   
   const styles = {
@@ -49,7 +50,7 @@ export const CreateTask = () => {
     try{
         const userData = JSON.parse(localStorage.getItem('user'));
 
-        let result = await axios.post("http://localhost:3001/createTask",{taskDetails}, {
+        let result = await axios.post(`${envConstant.apiUrl}/createTask`,{taskDetails}, {
             headers: {
                 token: userData.token
             }

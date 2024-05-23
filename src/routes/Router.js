@@ -10,6 +10,7 @@ import { CreateTask } from "../pages/CreateTask";
 import { PageNotFound } from "../pages/PageNotFound";
 import { StartTask } from "../pages/StartTask";
 import { ChangeTaskStatus } from "../pages/ChangeTaskStatus";
+import { ForgotPassword } from "../pages/ForgotPassword";
 export const Routers = () => {
   return (
     <div>
@@ -24,6 +25,7 @@ export const Routers = () => {
           <Route path="/CreateTask" element={<CreateTask/>}/>
           <Route path="/startTask" element={<StartTask/>}/>
           <Route path="/ChangeTaskStatus" element={<ChangeTaskStatus/>}/>
+          <Route path="/forgot" element={<ForgotPassword/>}/>
           <Route path="*" element={<PageNotFound/>}/> 
         </Routes>
       </BrowserRouter>

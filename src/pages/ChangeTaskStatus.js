@@ -9,6 +9,7 @@ import ReactDatePicker from 'react-datepicker';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { isLogin } from '../helper';
+import { envConstant } from '../envConstant';
 
 export const ChangeTaskStatus=()=>{
     const location = useLocation();
@@ -63,7 +64,7 @@ export const ChangeTaskStatus=()=>{
         try{
             const userData = JSON.parse(localStorage.getItem('user'));
     
-            let result = await axios.post("http://localhost:3001/taskCompleted",{id:taskData._id}, {
+            let result = await axios.post(`${envConstant.apiUrl}/taskCompleted`,{id:taskData._id}, {
                 headers: {
                     token: userData.token
                 }

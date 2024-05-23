@@ -6,6 +6,7 @@ import { LightColors } from "../constant/colors";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { envConstant } from "../envConstant";
 
 export const DeleteTask = ({taskData, taskType, bgColors })=>{
         const [showModal, setShowModal] = useState(false);
@@ -14,7 +15,7 @@ export const DeleteTask = ({taskData, taskType, bgColors })=>{
             try{
                 const userData = JSON.parse(localStorage.getItem('user'));
         
-                let result = await axios.post("http://localhost:3001/deleteTask",{id:taskData._id}, {
+                let result = await axios.post(`${envConstant.apiUrl}/deleteTask`,{id:taskData._id}, {
                     headers: {
                         token: userData.token
                     }
@@ -87,6 +88,7 @@ export const DeleteTask = ({taskData, taskType, bgColors })=>{
                 color: LightColors.danger,
                 boxShadow:'rgba(0, 0, 0, 1) 0px 0px 17px -9px',
                 cursor: "pointer",
+                fontSize: "16px"
               },
         }
       

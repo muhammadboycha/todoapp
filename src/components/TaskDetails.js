@@ -28,7 +28,7 @@ export const TaskDetails = ({ taskData,taskType, bgColors }) => {
     },
     icons: {
       display: "flex",
-      gap: "10px",
+      gap: "18px",
       margin: "0px",
       fontSize: "14px",
       color: LightColors.gray,
@@ -50,6 +50,7 @@ export const TaskDetails = ({ taskData,taskType, bgColors }) => {
     edit: {
       color: LightColors.primary,
       cursor: "pointer",
+      fontSize: "16px",
     },
     endDate:{
       display: "flex",

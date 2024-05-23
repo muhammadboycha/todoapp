@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { isLogin, logout } from '../helper';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { envConstant } from '../envConstant';
 
 export const Dashboard=()=>{
     const [allTask, setAllTask] = useState([]);
@@ -66,7 +67,7 @@ export const Dashboard=()=>{
         try{
             const userData = JSON.parse(localStorage.getItem('user'));
 
-            let result = await axios.get("http://localhost:3001/getAllTask", {
+            let result = await axios.get(`${envConstant.apiUrl}/getAllTask`, {
                 headers: {
                     token: userData.token
                 }

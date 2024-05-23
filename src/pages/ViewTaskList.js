@@ -8,6 +8,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { isLogin } from '../helper';
+import { envConstant } from '../envConstant';
 
 export const ViewTaskList=()=>{
     const location = useLocation();
@@ -22,7 +23,7 @@ export const ViewTaskList=()=>{
         try{
             const userData = JSON.parse(localStorage.getItem('user'));
 
-            let result = await axios.get("http://localhost:3001/getAllTask", {
+            let result = await axios.get(`${envConstant.apiUrl}/getAllTask`, {
                 headers: {
                     token: userData.token
                 }

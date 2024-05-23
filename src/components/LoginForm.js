@@ -3,6 +3,7 @@ import { LightColors } from "../constant/colors";
 import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from 'react-toastify';
 import axios from "axios";
+import { envConstant } from "../envConstant";
 export const LoginForm=()=>{
     const styles={
         heading:{
@@ -40,6 +41,7 @@ export const LoginForm=()=>{
             display: 'flex',
             gap: '15px',
             alignItems: 'center',
+            marginBottom: '15px'
         },
         alreadyHaveAccount:{
             marginBottom: '0px',
@@ -56,7 +58,7 @@ export const LoginForm=()=>{
 
     const apiCall = async()=>{
         try{
-            let result = await axios.post("http://localhost:3001/login",{name,mobile})
+            let result = await axios.post(`${envConstant.apiUrl}/login`,{name,mobile})
             result = result.data
             if(result.data){
                 setUserName("");
@@ -117,6 +119,7 @@ export const LoginForm=()=>{
           <p style={styles.alreadyHaveAccount}>If you don't have account?</p>
           <Link to="/" style={styles.login}>Create new Account.</Link>
           </div> 
+          <Link to="/forgot" style={styles.login}>Forgot Password?</Link>
           <button onClick={()=>{Login()}} style={styles.createBtn}>Login</button>
         </div>
     )
