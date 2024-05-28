@@ -1,13 +1,21 @@
-FROM node:18.12.1
+# Use Node.js as the base image
+FROM node:14
 
-WORKDIR /usr/src/app
+# Set the working directory
+WORKDIR /app
 
+# Copy package files and install dependencies
 COPY package*.json ./
-
 RUN npm install
 
+# Copy the app files
 COPY . .
 
-EXPOSE 3001
+# Build the React app
+RUN npm run build
 
-CMD ["node", "index.js"]
+# Expose port 4000 (you can change this if needed)
+EXPOSE 3000
+
+# Define the start command
+CMD ["npm", "start"]
