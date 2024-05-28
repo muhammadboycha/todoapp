@@ -1,3 +1,3 @@
 export const envConstant={
-    apiUrl:'http://localhost:3001'
+    apiUrl:'https://todoappapi-c65i.onrender.com'
 }
